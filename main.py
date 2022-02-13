@@ -1,11 +1,12 @@
-import binance
 from binance import Client
 import pandas as pd
 import ta
 import numpy as np
 import time
-from datetime import datetime,timezone
+from datetime import datetime, timezone
 
+import sheets
+from sheets import *
 
 
 def connect_to_client():
@@ -71,18 +72,26 @@ class Signals:
                 self.df['%D'].between(20, 80)) & (self.df.rsi > 50) & (self.df.macd > 0), 1, 0)
 
 
+def get_time():
+    now_utc = datetime.now(timezone.utc)
+    return now_utc.strftime('%m/%d/%Y %H:%M:%S')
+
+
 def strategy(pair, qty, open_position=False):
     df = get_minute_data(pair, '1m', '100')
     apply_technical_indicators(df)
     inst = Signals(df, 25)
     inst.decide()
-    now_utc = datetime.now(timezone.utc)
-    print(f"" + str(now_utc.strftime('%m/%d/%Y %H:%M:%S')) + "\tBOT RUNNING: current close price for " + pair + " is " + str(df.Close.iloc[-1]))
+
+    print(f"" + str(get_time()) + "\tBOT RUNNING: current close price for " + pair + " is " + str(
+        df.Close.iloc[-1]))
 
     # If there is a buying signal in the last row, place an order
     client = connect_to_client()
     if df.Buy.iloc[-1]:
         print(f"\nNew market BUY order for " + str(qty) + " " + pair + "\n")
+        aoa = [["BUY", pair, str(qty), str(get_time())]]
+        sheets.update_sheet(aoa)
         # order = client.create_order(symbol=pair, side='BUY', type='MARKET', quantity=qty)
         # print(order)
 
@@ -96,16 +105,17 @@ def strategy(pair, qty, open_position=False):
         df = get_minute_data(pair, '1m', '2')  # grab last 2 minutes of data
         print(f"Current Close: " + str(df.Close.iloc[-1]))
         print(f"Current Target: " + str(buyprice * 1.005))  # 0.5% take profit
-        print(f"Current Stop loss is: " + str(buyprice * 0.995))  # 0.5% stop loss
+        print(f"Current Stop loss is: " + str(buyprice * 0.995) + "\n")  # 0.5% stop loss
 
         # Check for stop loss
         if df.Close[-1] <= buyprice * 0.995 or df.Close[-1] >= 1.005 * buyprice:
             # Place sell order
             # order = client.create_order(symbol=pair, side='SELL', type='MARKET', quantity=qty)
             # print(order)
-            print(f"\n New market SELL order for " + str(qty) + " " + pair  + "\n")
+            print(f"\n New market SELL order for " + str(qty) + " " + pair + "\n")
+            aoa = [["SELL", pair, str(qty), str(get_time())]]
+            sheets.update_sheet(aoa)
             break
-
 
 
 if __name__ == '__main__':
@@ -121,6 +131,8 @@ if __name__ == '__main__':
 
     # Run Strategy to find close price for current trade
     # Does not actually trade anything
-    while True:
-        strategy('ADAUSDT', 50)
-        time.sleep(1)
+    # while True:
+    # strategy('ADAUSDT', 50)
+    # time.sleep(1)
+
+    sheets.update_sheet()

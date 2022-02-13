@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "aerobic-library-341221",
+  "private_key_id": "dac6d8a975b6bcbf129dc71162e8a15378a7a8d1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxJ5rIagZbhB36\nPTH088YnTu/PdBsyFnIvgZnBCFkgZcUJNbf2lrOzg5sizjYq/Q7skls39f53PXpX\nKTKwIWv9nDuc+1O/z3qbwQqxCwZrYhb5ZoWfNCItO6QWHKPzXntZuAegHNlTOOQ/\nSgQcN69qLfBubo/bN08WLePJcy7pVaV2/4nSuy+VtmO0hyfrzuSM1bmm2zSj8R+h\nGXgtRoCXALoQaXKL0rU4UmpygoQEkDoGmeknCQyFek3EZ5850MhvmsVCWpbQxvSW\nXh9JBchcjmk48hKA9jnpJjZaC8XSzY6rVpctLbuVlm6s82WxTJog5If0KptoK+gK\nN5jm3WiHAgMBAAECggEAODmZpoIAAour9//0GwpDmbYz5mOzPfJhyzIW2m0L3Hxw\nTLv/5wNthUv/sMxB5OLsGalZyikI2k9oxMEOlVgGLjens+sQaZAwGb7q5cXaA7re\nD8m6Hw0sy65iJaJxZoxWGeOOiAKf9wnXZz7Wjx4dTlXGOUZd4fVr5F4sLYOhH+zH\ncdmeRd0zAm3mRyUoZsYP6smN5ZN/l1Oq/u/eMgwIMyuCozAaTr5GQ3WVQNVISYNZ\nC6UsukqpsYaLubFiSg9dTvlsvhDjtdo4oLEAp8W/RVvVSjQ+S30zrmodYokjm5Yn\nXIIwmJzfUxYXT/OGGZaxahnpB8cml8anr9KYSNzwAQKBgQDhXpEgJtTgTZkFoTSx\nn64Mzwxew5Eg0BRg7zpSCMzcJac5QNASD+Rxa5hjz5bAbadXCMXLOT00nIQvhR2u\n8dq3BHB+uuY8i7YDEiRk9s5ppBBnx5N/1hv86Eefg2nU1uTkQtcBfzG4v1rcgPMJ\nBNcIjEbOC93F67WEk/KpucFTpwKBgQDJO3h0T8udqWIu8uLP8owVXimLJQtkbsz2\nZFjh+8h7fhqc/KkpXB7X3VG/EwmVhjmX+el6fUMhNllmtkQUki5MH0RScwDvD4dQ\nGimQRL8pBVo7Q5DhcJ5iRpt9ef+Z4seL2jPOEEe6kQvJoTv0iXJIULw18rwdkr+m\niHTiPDVgIQKBgD+JFYjm6aTCu50msWBSEBN0W5xrrgJ+JwCc8Ognqvl1dAtkBkTR\nTinbl36sC2f8gey7gGemn2axqWJsOM4VSP/HtJ9FuZrgGFQNTU1Zdx+5LRbU4PRt\nPD60jVyfA7sJSkY/wbWeUjovWEJJ6DpmruiuA1gbaE5gATB7NTI8OBCJAoGAY179\nxZod95ZMiNiiToP8zxR3uWGqtYbNqiK1jarTPsBwDfPq6SS3imudUZjqE697w2PC\n+xzeSIlZLpJ1Hh9tw2NxTrHB1Uu6y0CQI9D/ARfGjht4cQs2+1rYr+bN5MULOzGe\ngXSipyu3QXNgcwpop/NObemXIZd1Epyx84I97WECgYEAr+YMN73uSDGBjOrXNEUb\nIlGtqxW3tUiuaOuGx6GwpMJ9xQgRr8hFnt2WGgeeIC7xl//HTviDwXxNj7EUS87x\nvpLPZv8ejVLT/Ua823+vQ94amlfqAlKgCXkveLrvJ/rASh/sizydpYhtpM1QmDid\nLYI4gS3Z0RTGQPj9HdYE2Yk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sheets-python-service@aerobic-library-341221.iam.gserviceaccount.com",
+  "client_id": "101574199730210331480",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sheets-python-service%40aerobic-library-341221.iam.gserviceaccount.com"
+}
