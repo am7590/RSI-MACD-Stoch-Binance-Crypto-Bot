@@ -4,12 +4,14 @@ import pandas as pd
 import ta
 import numpy as np
 import time
+from datetime import datetime,timezone
+
 
 
 def connect_to_client():
-    # API Key, API Private
-    client = Client("CDbwg0t1i5U8PmfMwhhwPr9EMjj6v2rRpQ88P50mLHEZs5CNNfSCCZJ3KPKfW3Hd",
-                    "xFKfmX4IqtGh790vBzmkDb7xwm790EhcBsZMjWa5pllJroJm9e57xH8bBTU8gxHg")
+    # API Key, API Private (these are for paper trading on binance testnet)
+    client = Client("sWIoOijOOt0TFLucOTcGXDE2vcHEbHFIqNI7mpPHneMm1NP8RNkJUAhIIpbAU5zu",
+                    "DeAbORz62c8bLQW1Q7ehpOKTixL7gax8dy7kt33mUgbv0h0deeoYwpkCF0oevGt6")
     return client
 
 
@@ -69,12 +71,56 @@ class Signals:
                 self.df['%D'].between(20, 80)) & (self.df.rsi > 50) & (self.df.macd > 0), 1, 0)
 
 
-if __name__ == '__main__':
-    df = get_minute_data("ADAUSDT", "1m", "100")
+def strategy(pair, qty, open_position=False):
+    df = get_minute_data(pair, '1m', '100')
     apply_technical_indicators(df)
-    # print(df)
-
     inst = Signals(df, 25)
     inst.decide()
-    print(df[df.Buy == 1])
+    now_utc = datetime.now(timezone.utc)
+    print(f"" + str(now_utc.strftime('%m/%d/%Y %H:%M:%S')) + "\tBOT RUNNING: current close price for " + pair + " is " + str(df.Close.iloc[-1]))
 
+    # If there is a buying signal in the last row, place an order
+    client = connect_to_client()
+    if df.Buy.iloc[-1]:
+        print(f"\nNew market BUY order for " + str(qty) + " " + pair + "\n")
+        # order = client.create_order(symbol=pair, side='BUY', type='MARKET', quantity=qty)
+        # print(order)
+
+        # Filter out price of the order to find official buying price
+        buyprice = float(df.Close.iloc[-1])  # buyprice = float(order['fills'][0]['price'])
+        open_position = True
+
+    # Set parameters and close position
+    while open_position:
+        time.sleep(0.5)  # Avoid excessive requests to API
+        df = get_minute_data(pair, '1m', '2')  # grab last 2 minutes of data
+        print(f"Current Close: " + str(df.Close.iloc[-1]))
+        print(f"Current Target: " + str(buyprice * 1.005))  # 0.5% take profit
+        print(f"Current Stop loss is: " + str(buyprice * 0.995))  # 0.5% stop loss
+
+        # Check for stop loss
+        if df.Close[-1] <= buyprice * 0.995 or df.Close[-1] >= 1.005 * buyprice:
+            # Place sell order
+            # order = client.create_order(symbol=pair, side='SELL', type='MARKET', quantity=qty)
+            # print(order)
+            print(f"\n New market SELL order for " + str(qty) + " " + pair  + "\n")
+            break
+
+
+
+if __name__ == '__main__':
+    # Create a dataframe with price data + technical indicators
+    dataframe = get_minute_data("ADAUSDT", "1m", "100")
+    apply_technical_indicators(dataframe)
+    # print(dataframe)
+
+    # Find buy signals
+    inst = Signals(dataframe, 25)
+    inst.decide()
+    # print(dataframe[dataframe.Buy == 1])
+
+    # Run Strategy to find close price for current trade
+    # Does not actually trade anything
+    while True:
+        strategy('ADAUSDT', 50)
+        time.sleep(1)
