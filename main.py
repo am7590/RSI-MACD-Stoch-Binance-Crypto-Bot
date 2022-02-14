@@ -90,7 +90,7 @@ def strategy(pair, qty, open_position=False):
     client = connect_to_client()
     if df.Buy.iloc[-1]:
         print(f"\nNew market BUY order for " + str(qty) + " " + pair + "\n")
-        aoa = [["BUY", pair, str(qty), str(get_time())]]
+        aoa = [[str(get_time()), "BUY", pair, str(float(df.Close.iloc[-1])), str(qty)]]
         sheets.update_sheet(aoa)
         # order = client.create_order(symbol=pair, side='BUY', type='MARKET', quantity=qty)
         # print(order)
@@ -113,7 +113,7 @@ def strategy(pair, qty, open_position=False):
             # order = client.create_order(symbol=pair, side='SELL', type='MARKET', quantity=qty)
             # print(order)
             print(f"\n New market SELL order for " + str(qty) + " " + pair + "\n")
-            aoa = [["SELL", pair, str(qty), str(get_time())]]
+            aoa = [[str(get_time()), "SELL", pair, str(df.Close[-1]), str(qty)]]
             sheets.update_sheet(aoa)
             break
 
@@ -131,8 +131,7 @@ if __name__ == '__main__':
 
     # Run Strategy to find close price for current trade
     # Does not actually trade anything
-    # while True:
-    # strategy('ADAUSDT', 50)
-    # time.sleep(1)
+    while True:
+        strategy('ADAUSDT', 50)
+        time.sleep(1)
 
-    sheets.update_sheet()
