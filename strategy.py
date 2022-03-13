@@ -34,7 +34,8 @@ class Signals:
             mask = (self.df['%K'].shift(i) < 20) & (self.df['%D'].shift(i) < 20)
 
             # Append to dataframe
-            dfx = dfx.append(mask, ignore_index=True)
+            dfxn = pd.DataFrame([mask])
+            dfx = pd.concat([dfx, dfxn])
 
         # Return sums of vertical rows
         return dfx.sum(axis=0)
